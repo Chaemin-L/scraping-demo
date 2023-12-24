@@ -7,6 +7,8 @@ import "./App.css";
 const App = () => {
   const [example, setExample] = useState({
     title: "",
+    author: "",
+    publisher: "",
     content: "",
   });
 
@@ -30,12 +32,16 @@ const App = () => {
         request(data.bookUrl).then((html: any) => {
           const $ = load(html.data);
           const data = {
+            author: $("span.gd_auth").text(),
+            publisher: $("span.gd_pub").text(),
             content: $(
               "div#infoset_pubReivew > div.infoSetCont_wrap > div.infoWrap_txt"
             ).text(),
           };
           setExample((prev: any) => ({
             ...prev,
+            author: data.author,
+            publisher: data.publisher,
             content: data.content ? data.content : "출판사 서평이 없습니다",
           }));
         });
@@ -50,6 +56,8 @@ const App = () => {
         <br /> 가장 상단에 노출되는 책의 제목과 서평을 보여줍니다.
       </div>
       <h2 className="book-title">{example.title}</h2>
+      <span>{example.author}</span>
+      <span>{example.publisher}</span>
       <p className="book-review">{example.content}</p>
     </div>
   );
