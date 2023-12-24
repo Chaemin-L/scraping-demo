@@ -1,5 +1,4 @@
 import axios from "axios";
-import puppeteer from "puppeteer-core";
 
 const request = async (path: string) => {
   try {
